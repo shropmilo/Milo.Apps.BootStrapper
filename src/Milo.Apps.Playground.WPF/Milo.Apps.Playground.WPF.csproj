@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+    <BaseOutputPath>D:\Source\GitHub\shropmilo\Milo.Apps.BootStrapper\src\Milo.Apps.Bootstrapper\Milo.Apps.Bootstrapper.WPF\bin\Debug\net9.0-windows</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Milo.Core\src\Milo.Core\Milo.Core.csproj" />
+  </ItemGroup>
+
+</Project>
