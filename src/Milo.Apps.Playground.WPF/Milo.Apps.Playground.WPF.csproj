@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Milo.Controls\src\Milo.Controls.WPF\Milo.Controls.WPF.csproj" />
     <ProjectReference Include="..\..\..\Milo.Core\src\Milo.Core\Milo.Core.csproj" />
+    <ProjectReference Include="..\..\..\Milo.Messaging\src\Milo.Messaging.WPF\Milo.Messaging.WPF.csproj" />
   </ItemGroup>
 
 </Project>

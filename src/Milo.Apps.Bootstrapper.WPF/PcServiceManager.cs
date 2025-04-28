@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using Milo.Core;
 using Milo.Core.Services;
@@ -10,6 +9,7 @@ namespace Milo.Apps.Bootstrapper.WPF;
 internal class PcServiceManager : IMiloServiceManager
 {
     private readonly Dictionary<Type, object> _services = new();
+    private readonly List<Assembly> _assemblies = new List<Assembly>();
 
     private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
@@ -33,6 +33,7 @@ internal class PcServiceManager : IMiloServiceManager
             try
             {
                 var ass = Assembly.LoadFrom(file.FullName);
+                _assemblies.Add(ass);
                 foreach (var miloService in MiloCore.GetAssemblyInstances<IMiloService>(ass))
                 {
                     _services.Add(miloService.GetType(), miloService);
@@ -53,11 +54,49 @@ internal class PcServiceManager : IMiloServiceManager
     public void Stop()
     {
         _services.Clear();
+        _assemblies.Clear();
     }
 
-    public TInstanceType? CreateInstance<TInstanceType>()
+    public TInstanceType? CreateInstance<TInstanceType>() where TInstanceType : class
     {
-        return Activator.CreateInstance<TInstanceType>();
+        foreach (var assembly in _assemblies)
+        {
+            var instance = MiloCore.GetAssemblyInstances<TInstanceType>(assembly)?.FirstOrDefault();
+            if (instance != null)
+            {
+                return instance;
+            }
+        }
+
+        return null;
+    }
+
+    public object CreateInstance(Type type)
+    {
+        foreach (var assembly in _assemblies)
+        {
+            var instance = MiloCore.GetAssemblyInstances(type, assembly)?.FirstOrDefault();
+            if (instance != null)
+            {
+                return instance;
+            }
+        }
+
+        return null;
+    }
+
+    public IEnumerable<TInstanceType> CreateInstances<TInstanceType>() where TInstanceType : class
+    {
+        var instances = new List<TInstanceType>();
+        foreach (var assembly in _assemblies)
+        {
+            var instance = MiloCore.GetAssemblyInstances<TInstanceType>(assembly)?.FirstOrDefault();
+            if (instance != null)
+            {
+                instances.Add(instance);
+            }
+        }
+        return instances;
     }
 
     public TMiloService? GetService<TMiloService>() where TMiloService : IMiloService
@@ -67,7 +106,7 @@ internal class PcServiceManager : IMiloServiceManager
 
     public IEnumerable<TMiloService> GetServices<TMiloService>() where TMiloService : IMiloService
     {
-        List<TMiloService> list = new List<TMiloService>();
+        var list = new List<TMiloService>();
 
         foreach (var keyValuePair in _services.Where(kvp => kvp.Key.IsAssignableFrom(typeof(TMiloService))))
         {
