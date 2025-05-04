@@ -36,7 +36,7 @@ internal class PcServiceManager : IMiloServiceManager
                 _assemblies.Add(ass);
                 foreach (var miloService in MiloCore.GetAssemblyInstances<IMiloService>(ass))
                 {
-                    _services.Add(miloService.GetType(), miloService);
+                    _services[miloService.GetType()] = miloService;
                 }
             }
             catch (Exception e)
@@ -108,12 +108,9 @@ internal class PcServiceManager : IMiloServiceManager
     {
         var list = new List<TMiloService>();
 
-        foreach (var keyValuePair in _services.Where(kvp => kvp.Key.IsAssignableFrom(typeof(TMiloService))))
+        foreach (var keyValuePair in _services.Where(kvp => typeof(TMiloService).IsAssignableFrom(kvp.Key)))
         {
-            if (keyValuePair.Key.IsAssignableFrom(typeof(TMiloService)))
-            {
-                list.Add((TMiloService)keyValuePair.Value );
-            }
+            list.Add((TMiloService)keyValuePair.Value);
         }
         return list;
     }

@@ -8,7 +8,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 
-    <BaseOutputPath>D:\Source\GitHub\shropmilo\Milo.Apps.BootStrapper\src\Milo.Apps.Bootstrapper\Milo.Apps.Bootstrapper.WPF\bin\Debug\net9.0-windows</BaseOutputPath>
+    <BaseOutputPath>D:\Source\GitHub\shropmilo\Milo.Apps.BootStrapper\src\Milo.Apps.Bootstrapper.WPF\bin\Debug\net9.0-windows</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

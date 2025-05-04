@@ -9,12 +9,12 @@ namespace Milo.Apps.Playground.WPF.Views
     /// </summary>
     public class MiloViewBase : MiloSection, IMiloView
     {
+        public IMiloViewMeta Meta { get; private set; }
+
         static MiloViewBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MiloViewBase), new FrameworkPropertyMetadata(typeof(MiloViewBase)));
         }
-
-        public IMiloViewMeta Meta { get; private set; }
 
         public void Initialise(IMiloViewMeta meta)
         {
